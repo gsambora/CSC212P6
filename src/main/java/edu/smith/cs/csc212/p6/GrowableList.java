@@ -21,7 +21,15 @@ public class GrowableList<T> implements P6List<T> {
 
 	@Override
 	public T removeBack() {
-		throw new P6NotImplemented();
+		if (this.size() == 0) {
+			throw new EmptyListError();
+		}
+		
+		T value = this.getIndex(fill-1);
+		this.array[fill-1] = null;
+		fill--;
+		
+		return value;
 	}
 
 	@Override
@@ -41,21 +49,36 @@ public class GrowableList<T> implements P6List<T> {
 
 	@Override
 	public void addFront(T item) {
-		throw new P6NotImplemented();
+		addIndex(item, 0);
+		//throw new P6NotImplemented();
 	}
 
 	@Override
 	public void addBack(T item) {
 		// I've implemented part of this for you.
 		if (fill >= this.array.length) { 
-			throw new P6NotImplemented();
+			int newSize = fill * 2;
+			Object[] newArray = new Object[newSize];
+			for ( int i = 0; i < array.length; i++ ) {
+				newArray[i] = array[i];
+			}
+			this.array = newArray;
 		}
-		this.array[fill++] = item;
+		
+		this.array[fill] = item;
+		fill++;
 	}
 
 	@Override
 	public void addIndex(T item, int index) {
-		throw new P6NotImplemented();
+		// loop backwards, shifting items to the right.
+		for (int j=fill; j>index; j--) {
+			array[j] = array[j-1];
+		}
+		array[index] = item;
+		fill++;		
+			
+		//throw new P6NotImplemented();
 	}
 	
 	@Override

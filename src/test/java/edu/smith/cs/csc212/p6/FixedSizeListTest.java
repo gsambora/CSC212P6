@@ -2,6 +2,7 @@ package edu.smith.cs.csc212.p6;
 
 import org.junit.Test;
 
+import edu.smith.cs.csc212.p6.errors.BadIndexError;
 import edu.smith.cs.csc212.p6.errors.EmptyListError;
 import edu.smith.cs.csc212.p6.errors.RanOutOfSpaceError;
 
@@ -146,4 +147,48 @@ public class FixedSizeListTest {
 		Assert.assertEquals("a", data.removeIndex(0));
 		Assert.assertEquals(0, data.size());
 	}
+	
+	@Test
+	public void testGetIndex() {
+		P6List<String> data = makeFullList();
+		Assert.assertEquals("a", data.getIndex(0));
+		Assert.assertEquals("b", data.getIndex(1));
+		Assert.assertEquals("c", data.getIndex(2));
+		Assert.assertEquals("d", data.getIndex(3));
+		//Assert.assertEquals( 0, data.getIndex(-1));
+		//data.getIndex(-1);
+		//Assert.assertEquals( BadIndexError, data.getIndex(5));
+	}
+	
+	@Test
+	public void testSize() {
+		P6List<String>data = makeFullList();
+		Assert.assertEquals(4, data.size());
+	}
+	
+	@Test
+	public void testIsEmpty() {
+		P6List<String>data = new FixedSizeList<String>(0);
+		Assert.assertEquals(true, data.isEmpty());
+		
+		P6List<String>data1 = makeFullList();
+		Assert.assertEquals(false, data1.isEmpty());
+	}
+	
+	@Test
+	public void testGetFront() {
+		P6List<String>data = makeFullList();
+		Assert.assertEquals("a", data.getFront());
+		
+		P6List<String>data1 = new FixedSizeList<String>(0);
+		//Assert.assertEquals(EmptyListError, data1.getFront());
+	}
+	
+	@Test
+	public void testGetBack() {
+		P6List<String>data = makeFullList();
+		Assert.assertEquals("d", data.getBack());
+	}
+	
+	
 }

@@ -23,9 +23,11 @@ public class FixedSizeList<T> implements P6List<T> {
 		if (this.size() == 0) {
 			throw new EmptyListError();
 		}
+		
+		T value = this.getIndex(fill-1);
+		this.array[fill-1] = null;
 		fill--;
-		T value = this.getIndex(fill);
-		this.array[fill] = null;
+		
 		return value;
 	}
 
@@ -75,7 +77,7 @@ public class FixedSizeList<T> implements P6List<T> {
 	 * Keep the "guessing" the objects are actually a T here.
 	 * Do that by calling this method instead of using the array directly.
 	 */
-	@SuppressWarnings("unchecked")
+	//@SuppressWarnings("unchecked")
 	@Override
 	public T getIndex(int index) {
 		if (index < 0 || index >= fill) {
@@ -83,17 +85,21 @@ public class FixedSizeList<T> implements P6List<T> {
 		}
 		return (T) this.array[index];
 	}
-
+	
+	
 	@Override
 	public int size() {
 		return this.fill;
 	}
 
+	
 	@Override
 	public boolean isEmpty() {
 		return this.fill == 0;
 	}
-
+	
+	
+	
 	@Override
 	public T getFront() {
 		if (this.isEmpty()) {
@@ -101,7 +107,9 @@ public class FixedSizeList<T> implements P6List<T> {
 		}
 		return this.getIndex(0);
 	}
-
+	
+	//@SuppressWarnings("unchecked")
+	
 	@Override
 	public T getBack() {
 		if (this.isEmpty()) {

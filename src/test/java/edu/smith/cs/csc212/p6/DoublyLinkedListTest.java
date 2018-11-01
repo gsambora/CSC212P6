@@ -2,20 +2,19 @@ package edu.smith.cs.csc212.p6;
 
 import org.junit.Assert;
 import org.junit.Test;
-import edu.smith.cs.csc212.p6.errors.BadIndexError;
+
 import edu.smith.cs.csc212.p6.errors.EmptyListError;
-import edu.smith.cs.csc212.p6.errors.RanOutOfSpaceError;
 
+public class DoublyLinkedListTest {
 
-
-public class GrowableListTest {
-	
 	/**
 	 * Helper method to make a full list.
 	 * @return
 	 */
+	
+	
 	public P6List<String> makeFullList() {
-		P6List<String> data = new GrowableList<String>();
+		P6List<String> data = new DoublyLinkedList<String>();
 		data.addBack("a");
 		data.addBack("b");
 		data.addBack("c");
@@ -50,10 +49,10 @@ public class GrowableListTest {
 		Assert.assertEquals("a", data.removeIndex(0));
 		Assert.assertEquals(0, data.size());
 		
-		P6List<String> data1 = new GrowableList<String>();
+		P6List<String> data1 = new DoublyLinkedList<String>();
 		data1.removeIndex(2);
 	}
-
+	
 	@Test( expected = EmptyListError.class )
 	public void testRemoveBack() {
 		P6List<String> data = makeFullList();
@@ -67,13 +66,13 @@ public class GrowableListTest {
 		Assert.assertEquals("a", data.removeBack());
 		Assert.assertEquals(0, data.size());
 		
-		P6List<String> data1 = new GrowableList<String>();
+		P6List<String> data1 = new DoublyLinkedList<String>();
 		data1.removeBack();
 	}
 	
 	@Test
 	public void testAddToFront() {
-		P6List<String> data = new GrowableList<String>();
+		P6List<String> data = new DoublyLinkedList<String>();
 		data.addFront("1");
 		Assert.assertEquals(1, data.size());
 		Assert.assertEquals("1", data.getIndex(0));
@@ -92,7 +91,8 @@ public class GrowableListTest {
 		Assert.assertEquals("0", data.getIndex(2));
 		Assert.assertEquals("1", data.getIndex(3));
 	}
-
+	
+	
 	@Test
 	public void testAddToIndex() {
 		P6List<String> data = makeFullList();
@@ -102,15 +102,15 @@ public class GrowableListTest {
 		Assert.assertEquals("d", data.getIndex(4));
 	}
 	
+	
 	@Test
 	public void testAddToBack() {
 		P6List<String> data = makeFullList();
-		for ( int i = 0; i < 35; i++ ) {
-			data.addBack("e");
-			Assert.assertEquals("e", data.getBack());
-		}
+		data.addBack("e");
+		Assert.assertEquals("e", data.getBack());
 		
 	}
+	
 	
 	@Test
 	public void testGetIndex() {
@@ -141,7 +141,7 @@ public class GrowableListTest {
 	
 	@Test
 	public void testIsEmpty() {
-		P6List<String>data = new GrowableList<String>();
+		P6List<String>data = new DoublyLinkedList<String>();
 		Assert.assertEquals(true, data.isEmpty());
 		
 		P6List<String>data1 = makeFullList();

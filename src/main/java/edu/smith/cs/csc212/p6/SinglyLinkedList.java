@@ -11,6 +11,9 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 	 */
 	Node<T> start;
 
+	/**
+	 * O(1) - It is easy to take off the front, since we just update our start
+	 */
 	@Override
 	public T removeFront() {
 		checkNotEmpty();
@@ -19,46 +22,156 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 		return before;
 	}
 
+	/**
+	 * O(n) - It is less easy to remove from the back, since the pointers must be fixed
+	 * through a for loop
+	 */
 	@Override
 	public T removeBack() {
-		throw new P6NotImplemented();
+		checkNotEmpty();
+		T last = null;
+		Node<T> nextToLast = null;
+		
+		if ( start.next == null ) {
+			last = start.value;
+			start = null;
+			return last;
+		}
+		
+		for (Node<T> current = start; current.next != null; current = current.next) {
+			
+			if ( current.next.next == null ) {
+				last = current.next.value;
+				current.next = null;
+				return last;
+			}
+		}
+		
+		return last;
 	}
 
+	/**
+	 * O(n) - This is difficult and annoying, since multiple pointers must be fixed with a loop. 
+	 */
 	@Override
 	public T removeIndex(int index) {
-		throw new P6NotImplemented();
+		checkNotEmpty();
+		int at = 0;
+		T value = null;
+		
+		if ( this.size() == 1 ) {
+			value = start.value;
+			start = null;
+			return value;
+		}
+		
+		for (Node<T> current = start; current.next != null; current = current.next) {
+			if ( at + 1 == index ) {
+				value = current.next.value;
+				
+				if ( current.next.next != null ) {
+					current.next = current.next.next;
+				} else {
+					current.next = null;
+				}
+				break;
+			}
+			else {
+				at++;
+			}
+		}
+		return value;
 	}
-
+	
+	/**
+	 * O(1) - Extremely easy, just create a new start with its "next" as the original start
+	 */
 	@Override
 	public void addFront(T item) {
 		this.start = new Node<T>(item, start);
 	}
 
+	/**
+	 * O(n) - More difficult, since the last value's next pointer will have to be changed
+	 * and we cannot find this without looping through everything
+	 */
 	@Override
 	public void addBack(T item) {
-		throw new P6NotImplemented();
+		Node<T> last = null;
+		for (Node<T> current = start; current != null; current = current.next) {
+			last = current;
+		}
+		if (last != null) {
+			last.next = new Node<T>(item,null);
+		} else {
+			start = new Node<T>(item,null);
+		}
 	}
 
+	/**
+	 * O(n) - We have to loop through the entire list to find our indexed value,
+	 * then fix pointers as well
+	 */
 	@Override
 	public void addIndex(T item, int index) {
-		throw new P6NotImplemented();
+		int at = 0;
+		
+		for (Node<T> current = start; current.next != null; current = current.next) {
+			if ( at + 1 == index ) {
+				Node<T> newNext = current.next;
+				current.next = new Node<T>(item, newNext);
+				break;
+			}
+			else {
+				at++;
+			}
+		}
 	}
 
+	/**
+	 * O(1) - Easy since we've been keeping track of what the front is 
+	 */
 	@Override
 	public T getFront() {
 		return start.value;
 	}
 
+	/**
+	 * O(n) - We have to loop through everything to find the last item in the list
+	 */
 	@Override
 	public T getBack() {
-		throw new P6NotImplemented();
+		T back = null;
+		
+		back = this.getIndex(this.size()-1);
+		
+		return back;
+		//throw new P6NotImplemented();
 	}
 
+	/**
+	 * O(n) - We have to loop through everything until we find the indexed value 
+	 */
 	@Override
 	public T getIndex(int index) {
-		throw new P6NotImplemented();
+		int at = 0;
+		T value = null;
+		for (Node<T> current = start; current != null; current = current.next) {
+			if (at == index) {
+				value = current.value;
+				return value;
+			}
+			else {
+				at++;
+			}
+		}
+		return value;
+		//throw new IndexOutOfBoundsException();
 	}
 
+	/**
+	 * O(n) - We have to loop through the whole list in order to count up the items 
+	 */
 	@Override
 	public int size() {
 		int count = 0;
@@ -68,9 +181,12 @@ public class SinglyLinkedList<T> implements P6List<T>, Iterable<T> {
 		return count;
 	}
 
+	/**
+	 * O(1) - If the start of the list is null, that means nothing is in the list
+	 */
 	@Override
 	public boolean isEmpty() {
-		throw new P6NotImplemented();
+		return start == null;
 	}
 
 	/**

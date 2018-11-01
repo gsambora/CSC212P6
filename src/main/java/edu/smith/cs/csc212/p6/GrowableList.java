@@ -13,12 +13,17 @@ public class GrowableList<T> implements P6List<T> {
 		this.fill = 0;
 	}
 
+	/**
+	 * O(n) - Everything in the list after the front has to be shifted back
+	 */
 	@Override
 	public T removeFront() {
 		return removeIndex(0);
-		//throw new P6NotImplemented();
 	}
 
+	/**
+	 * O(1) - Nothing has to be moved to remove from the back
+	 */
 	@Override
 	public T removeBack() {
 		if (this.size() == 0) {
@@ -32,6 +37,9 @@ public class GrowableList<T> implements P6List<T> {
 		return value;
 	}
 
+	/**
+	 * O(n) - Everything in the list after the indexed item has to be shifted back
+	 */
 	@Override
 	public T removeIndex(int index) {
 		if (this.size() == 0) {
@@ -44,15 +52,20 @@ public class GrowableList<T> implements P6List<T> {
 		}
 		this.array[fill] = null;
 		return removed;
-		//throw new P6NotImplemented();
 	}
 
+	/**
+	 * O(n) - Everything has to be shifted down one in order to give room for the new front
+	 */
 	@Override
 	public void addFront(T item) {
 		addIndex(item, 0);
-		//throw new P6NotImplemented();
 	}
 
+	/**
+	 * O(1) - When the list isn't full, it is easy to just add something to the back
+	 * O(n) - If the list is full and we need a bigger list, everything will need to be copied
+	 */
 	@Override
 	public void addBack(T item) {
 		// I've implemented part of this for you.
@@ -69,6 +82,9 @@ public class GrowableList<T> implements P6List<T> {
 		fill++;
 	}
 
+	/**
+	 * O(n) - Everything after the index will have to be shifted down to make room
+	 */
 	@Override
 	public void addIndex(T item, int index) {
 		// loop backwards, shifting items to the right.
@@ -77,40 +93,50 @@ public class GrowableList<T> implements P6List<T> {
 		}
 		array[index] = item;
 		fill++;		
-			
-		//throw new P6NotImplemented();
 	}
 	
+	/** 
+	 * O(1) - Indexing is easy, so finding the front is also easy
+	 */
 	@Override
 	public T getFront() {
 		return this.getIndex(0);
 	}
 
+	/** 
+	 * O(1) - Indexing is easy, so finding the back is also easy
+	 */
 	@Override
 	public T getBack() {
 		return this.getIndex(this.fill-1);
 	}
 
-	/**
-	 * Do not allow unchecked warnings in any other method.
-	 * Keep the "guessing" the objects are actually a T here.
-	 * Do that by calling this method instead of using the array directly.
+	/** 
+	 * O(1) - Indexing is easy here 
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public T getIndex(int index) {
 		return (T) this.array[index];
 	}
 
+	/**
+	 * O(1) - We've been keeping track of fill the whole time so it's easy to grab
+	 */
 	@Override
 	public int size() {
 		return fill;
 	}
 
+	/**
+	 * O(1) - Again, we've been keeping track of fill the whole time so 
+	 * it's easy to see when it's zero
+	 */
 	@Override
 	public boolean isEmpty() {
 		return fill == 0;
 	}
+	
+	
 
 
 }
